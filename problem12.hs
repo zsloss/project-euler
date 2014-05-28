@@ -7,6 +7,11 @@
 
 triNums = [ x + sum [0..(x-1)] | x <- [1..] ]
 
-factors n = [ x | x <- [1..(div n 2) + 1] ++ [n], mod n x == 0 ]
+-- From problem3.hs
+factors :: Integer -> [Integer]
+factors n = [ x | x <- possibleFactors, divisible x] ++ [ (div n x) | x <- reverse possibleFactors, divisible x]
+	where
+		possibleFactors = [2..ceiling (sqrt (fromIntegral(n)))]
+		divisible x = n `mod` x == 0
 
 solution = head [ x | x <- triNums, length (factors x) > 500]
